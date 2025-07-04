@@ -1,7 +1,6 @@
-// frontend/postcss.config.js
 module.exports = {
   plugins: {
-    '@tailwindcss/postcss': {}, // Ensure this is exactly how it's written
+    tailwindcss: {}, // This refers to the 'postcss7-compat' package you installed
     autoprefixer: {},
   },
 };
