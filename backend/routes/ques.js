@@ -5,16 +5,25 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   const role = req.query.role;
-  console.log("👉 ROLE RECEIVED:", role);
-  try {
-    const technical = await Question.find({ 
-      role: { $regex: new RegExp("^" + role.trim() + "$", "i") }, 
-      type: "technical" 
-    });
-    const behavioral = await Question.find({ 
-      role: { $regex: new RegExp("^" + role.trim() + "$", "i") }, 
-      type: "behavioral" 
-    });
+  console.log("ROLE RECEIVED:", role);
+    try {
+      const technical = await Question.aggregate([
+      { $match: { 
+          role: { $regex: new RegExp("^" + role.trim() + "$", "i") }, 
+          type: "technical" 
+        } 
+      },
+      { $sample: { size: 7 } }
+    ]);
+
+  const behavioral = await Question.aggregate([
+      { $match: { 
+          role: { $regex: new RegExp("^" + role.trim() + "$", "i") }, 
+          type: "behavioral" 
+        } 
+      },
+      { $sample: { size: 3 } }
+    ]);
 
     res.json({ technical, behavioral });
   } catch (err) {

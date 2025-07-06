@@ -17,17 +17,34 @@ export default function QuestionCard({ data, addToReport }) {
     setLoading(false);
   };
 
+  const getDifficultyColor = (level) => {
+    switch (level.toLowerCase()) {
+      case "easy":
+        return "text-green-500";
+      case "medium":
+        return "text-red-400";
+      case "hard":
+        return "text-red-700";
+      default:
+        return "text-gray-600";
+    }
+  };
+
   return (
     <div className="bg-white p-4 rounded shadow">
       <p className="font-semibold">{data.question}</p>
-      <p className="text-sm text-gray-500">{data.type} | {data.difficulty}</p>
+      <p className="text-sm text-gray-500">{data.type} | {" "}
+        <span className={`font-medium ${getDifficultyColor(data.difficulty)}`}>
+          {data.difficulty}
+        </span>
+      </p>
       {!answer && (
         <button
           className="mt-2 bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
           onClick={getAnswer}
           disabled={loading}
         >
-          {loading ? "Loading..." : "Get GPT Answer"}
+          {loading ? "Loading..." : "Get Answer"}
         </button>
       )}
       {answer && (

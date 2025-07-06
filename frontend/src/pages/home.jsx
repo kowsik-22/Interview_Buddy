@@ -18,6 +18,7 @@ export default function Home({ setRole, startInterview }) {
       >
         <option value="">Select Role</option>
         <option value="SDE">SDE</option>
+        <option value="PM">PM</option>
         <option value="UI/UX">UI/UX</option>
       </select>
       <button
